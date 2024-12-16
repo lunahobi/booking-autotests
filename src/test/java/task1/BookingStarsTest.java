@@ -1,13 +1,15 @@
-package task1.tests;
+package task1;
 
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import pages.*;
-import task1.tests.base.BaseTest;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class BookingStarsTest{
+public class BookingStarsTest extends BaseTest{
+
+    private final static String baseUrl = "https://booking.com/";
+    private final static String searchWord = "Анталья";
 
     /**
      * Зайти на сайт https://booking.com/
@@ -18,12 +20,24 @@ public class BookingStarsTest{
      * убедиться, что все отели на данной странице имеют 5 звёзд
      */
     @Test
-    @DisplayName("Тестирование страницы расписания на сайте Мосполитеха")
-    public void test(){
-        open("https://booking.com/", StartPage.class)
-                .search("Анталья")
-                .checkTitle("Анталья")
-                .select5stars()
-                .check5stars();
+    @DisplayName("Проверка корректного отображения звезд и применения фильтра")
+    public void test1(){
+        open(baseUrl, StartPage.class)
+                .acceptCookies()
+                .search(searchWord)
+                .checkTitle("searchWord")
+                .selectFiveStars()
+                .checkFiveStars();
+    }
+
+    @Test
+    @DisplayName("Проверка корректной работы карты")
+    public void test2(){
+        open(baseUrl, StartPage.class)
+                .acceptCookies()
+                .search(searchWord)
+                .checkTitle(searchWord)
+                .selectFiveStars()
+                .checkFiveStars();
     }
 }
