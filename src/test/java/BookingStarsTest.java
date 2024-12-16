@@ -1,5 +1,3 @@
-package task1;
-
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import pages.*;
@@ -24,20 +22,35 @@ public class BookingStarsTest extends BaseTest{
     public void test1(){
         open(baseUrl, StartPage.class)
                 .acceptCookies()
-                .search(searchWord)
-                .checkTitle("searchWord")
+                .inputDestination(searchWord)
+                .clickSearch()
+                .checkTitle(searchWord)
                 .selectFiveStars()
                 .checkFiveStars();
     }
 
+    /**
+     * Зайти на сайт https://www.booking.com/
+     * ввести в поиске любой город(заграничный)
+     * выбрать случайные даты
+     * нажать на кнопку «Найти»
+     * нажать на кнопку «Показать на карте»
+     * навести курсор на первый отель(карточка слева)
+     * сохранить(в переменные) название отеля, количество звезд, среднюю оценку, количество отзывов, стоимость
+     * нажать на соответствующий маркер на карте
+     * на открывшейся странице отеля проверить название отеля, количество звезд, среднюю оценку, количество отзывов и стоимость
+     */
     @Test
     @DisplayName("Проверка корректной работы карты")
     public void test2(){
         open(baseUrl, StartPage.class)
                 .acceptCookies()
-                .search(searchWord)
-                .checkTitle(searchWord)
-                .selectFiveStars()
-                .checkFiveStars();
+                .inputDestination("Венеция")
+                .chooseDate()
+                .clickSearch()
+                .showOnMap()
+                .hoverFirstHotel()
+                .clickMapMarker()
+                .check();
     }
 }

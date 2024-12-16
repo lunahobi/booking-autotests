@@ -1,5 +1,3 @@
-package task1;
-
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -15,6 +13,7 @@ public class BaseTest {
         Configuration.browser = "chrome";
         Configuration.webdriverLogsEnabled = true;
         Configuration.headless = false;
+        Configuration.timeout = 10000;
     }
 
     @Before

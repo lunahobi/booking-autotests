@@ -12,6 +12,7 @@ public class SearchPage {
     private final SelenideElement destinationField = $("[data-testid='destination-container'] input");
     private final ElementsCollection filterFiveStars = $$("div[data-filters-item='class:class=5']");
     private final SelenideElement closePopUp = $("[aria-label='Скрыть меню входа в аккаунт.']");
+    private final SelenideElement showMapButton = $("button[data-map-trigger-button]");
 
     private void closePopUpWithRetries() {
         for (int i = 0; i < 5; i++) { // Проверяем до 5 раз
@@ -20,7 +21,7 @@ public class SearchPage {
                 closePopUp.should(disappear); // Ждем, пока попап исчезнет
                 break;
             }
-            sleep(500); // Пауза между проверками
+            sleep(1000); // Пауза между проверками
         }
     }
 
@@ -37,7 +38,7 @@ public class SearchPage {
         return this;
     }
 
-    @Step("проверить, что все отели с 5 звездами")
+    @Step("Проверить, что все отели с 5 звездами")
     public void checkFiveStars() {
         sleep(5000);
         int fiveStarsCount = 0;
@@ -66,6 +67,14 @@ public class SearchPage {
 
         // Проверяем, что каждая карточка имеет 5 звезд
         assertEquals("Не все карточки имеют 5 звезд.", loadedCardsCount, fiveStarsCount);
+    }
+
+    @Step("Нажать на кнопку 'Показать на карте'")
+    public MapPage showOnMap(){
+        closePopUpWithRetries();
+        showMapButton.shouldBe(visible).hover().click();
+        closePopUpWithRetries();
+        return page(MapPage.class);
     }
 
 }
